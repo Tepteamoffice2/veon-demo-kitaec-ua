@@ -1,0 +1,299 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Header from "../components/Header.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Icon from "../components/Icon.astro";
+import Logo from "../components/Logo.astro";
+import { Picture } from "astro:assets";
+import nyvky from "../assets/stores/nyvky.jpg";
+import voskresenka from "../assets/stores/voskresenka.png";
+import { phones, channels, socials, brandsChina, brandsEv, stores, kits, categories, mapLink, NOTE } from "../data/site";
+import "../styles/site.css";
+
+const title = "Запчастини для китайських авто та електромобілів — Китаєць";
+const description = "Підбір за маркою та VIN для Chery, Geely, BYD, Tesla та інших. Відправка в день замовлення, 5 магазинів у Києві та Кропивницькому.";
+const h1 = ["Запчастини", "для китайських авто", "та електромобілів"];
+const allStores = [...stores.kyiv, ...stores.kropyvnytskyi];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", name: "Китаєць", telephone: phones.main.tel, sameAs: socials.map((s) => s.href) },
+    ...stores.kyiv.map((s) => ({ "@type": "AutoPartsStore", name: `Китаєць — ${s.name}`, telephone: phones.main.tel, address: { "@type": "PostalAddress", streetAddress: s.street, addressLocality: "Київ", addressCountry: "UA" } })),
+    ...stores.kropyvnytskyi.map((s) => ({ "@type": "AutoPartsStore", name: `Китаєць — ${s.name}`, telephone: phones.main.tel, address: { "@type": "PostalAddress", streetAddress: s.street, addressLocality: "Кропивницький", addressCountry: "UA" } })),
+  ],
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+  <Header slot="header" />
+
+  <Section id="hero" class="field hero" rec="U-R001, U-R002, M-R003, SEO-R001, SEO-R003, SEO-R004">
+    <div class="wrap hero__grid">
+      <div class="hero__main">
+          <h1 class="hero__h1">
+            {h1.map((l, i) => <span class="line" style={`--i:${i}`}>{l}{i < h1.length - 1 ? " " : ""}</span>)}
+          </h1>
+          <p class="hero__lead">Завжди правильний вибір запчастин: підберемо за маркою або VIN</p>
+          <div class="hero__ctrl">
+            <div class="mode js-only" role="group" aria-label="Тип авто">
+              <button type="button" class="mode__btn" data-mode-btn="china" aria-pressed="true">Китайські авто</button>
+              <button type="button" class="mode__btn" data-mode-btn="ev" aria-pressed="false">Електромобілі</button>
+            </div>
+            <div class="pick">
+              <label class="pick__label" for="brand">Марка</label>
+              <select id="brand" class="pick__select" data-brand-select>
+                <option value="">Оберіть марку</option>
+                {brandsChina.map((b) => <option value={b}>{b}</option>)}
+              </select>
+              <FutureLink note="Підбір з'явиться у повній версії сайту" class="btn btn--light pick__go">Підібрати</FutureLink>
+            </div>
+            <div class="hero__vin">
+              <a class="btn btn--outline" href={channels.telegram} target="_blank" rel="noopener"><Icon name="telegram" size={20} />Підбір за VIN у Telegram</a>
+              <a class="hero__or" href={`tel:${phones.main.tel}`}>або зателефонуйте <span class="num">{phones.main.label}</span></a>
+            </div>
+          </div>
+          <p class="hero__ship" data-ship aria-live="polite"><span class="dot" aria-hidden="true"></span><span data-ship-text>Відправка в день замовлення: до 16:00 пн–пт, до 12:00 сб–нд</span></p>
+      </div>
+      <div class="hero__fact"><span class="hero__big num">16:00</span><span class="hero__cap">відправка в день замовлення (пн–пт), сб–нд — до 12:00</span></div>
+    </div>
+  </Section>
+
+  <Section id="picker" class="field picker" rec="U-R001, U-R003" label="Марки">
+    <div class="wrap">
+      <h2 class="picker__title">Оберіть марку</h2>
+      <ul class="board board--china" style={`--rows:${Math.ceil(brandsChina.length / 2)}`}>
+        {brandsChina.map((b) => <li><FutureLink note={NOTE} class="board__row"><span>{b}</span><Icon name="arrow" size={32} /></FutureLink></li>)}
+      </ul>
+      <ul class="board board--ev" style={`--rows:${Math.ceil(brandsEv.length / 2)}`}>
+        {brandsEv.map((b) => <li><FutureLink note={NOTE} class="board__row"><span>{b}</span><Icon name="arrow" size={32} /></FutureLink></li>)}
+      </ul>
+      <p class="picker__vin">Не знайшли марку? <a href={channels.telegram} target="_blank" rel="noopener">Надішліть VIN у Telegram</a></p>
+    </div>
+  </Section>
+
+  <Section id="kits" class="kits" rec="U-R003" label="Набори для ТО">
+    <div class="wrap">
+      <div class="kits__head">
+        <h2>Набори для ТО під вашу модель</h2>
+        <p class="lead">Оберіть тип набору — а підібрати його під вашу машину допоможемо за VIN.</p>
+      </div>
+      <ul class="kits__list">
+        {kits.map((k) => <li><FutureLink note={NOTE} class="tile"><span>{k}</span><Icon name="arrow" size={24} /></FutureLink></li>)}
+      </ul>
+      <div class="kits__cta">
+        <a class="btn btn--red" href={channels.telegram} target="_blank" rel="noopener"><Icon name="telegram" size={20} />Підібрати набір за VIN</a>
+        <a class="link-red" href={`tel:${phones.main.tel}`}>або зателефонуйте <span class="num">{phones.main.label}</span></a>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="ev" class="ev" rec="U-R003" label="Електромобілі">
+    <div class="wrap">
+      <h2 class="ev__title">Усе для електромобілів: деталі та зарядка</h2>
+      <div class="ev__cols">
+        <div class="ev__col">
+          <h3>Деталі для електромобілів</h3>
+          <p>Для Tesla, Nissan, Honda, Volkswagen, BYD, Zeekr, Hyundai, Kia, Toyota та інших марок.</p>
+        </div>
+        <div class="ev__col">
+          <h3>Зарядні пристрої, конектори, перехідники</h3>
+          <p>Не впевнені, що підійде до вашої зарядки? Напишіть — підкажемо.</p>
+        </div>
+      </div>
+      <div class="ev__cta">
+        <a class="btn btn--light" href={channels.telegram} target="_blank" rel="noopener"><Icon name="telegram" size={20} />Запитати, що підійде</a>
+        <a class="btn btn--outline" href={channels.viber}><Icon name="viber" size={20} />Viber</a>
+        <a class="ev__tel" href={`tel:${phones.main.tel}`}><span class="num">{phones.main.label}</span></a>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="categories" class="categories" rec="U-R003" label="Інші товари">
+    <div class="wrap">
+      <h2>Ще в магазині</h2>
+      <ul class="index">
+        {categories.map((c) => <li><FutureLink note={NOTE} class="index__row"><span>{c}</span><Icon name="arrow" size={24} /></FutureLink></li>)}
+      </ul>
+    </div>
+  </Section>
+
+  <Section id="delivery" class="delivery" rec="U-R005" label="Доставка, оплата, повернення">
+    <div class="wrap delivery__grid">
+      <div class="figs">
+        <h2>Відправка в день замовлення</h2>
+        <dl class="figs__list">
+          <div class="fig" data-reveal><dt>пн–пт, замовлення до</dt><dd class="fig__n num">16:00</dd></div>
+          <div class="fig" data-reveal style="--reveal-delay:60ms"><dt>сб–нд, замовлення до</dt><dd class="fig__n num">12:00</dd></div>
+          <div class="fig" data-reveal style="--reveal-delay:120ms"><dt>повернення, днів · на автозапчастини</dt><dd class="fig__n num">14 / 30</dd></div>
+        </dl>
+        <p class="figs__note">Відправляємо 7 днів на тиждень.</p>
+      </div>
+      <div class="facts">
+        <div class="facts__item">
+          <h3>Доставка</h3>
+          <p>По всій Україні Новою Поштою: у відділення або кур'єром. Або заберіть замовлення у магазині.</p>
+        </div>
+        <div class="facts__item">
+          <h3>Оплата</h3>
+          <p>Накладений платіж, безготівковий рахунок, картка Visa/Mastercard через WayForPay, Privat24, Google Pay, Apple Pay. Для габаритних товарів — 100% передоплата.</p>
+        </div>
+        <div class="facts__item">
+          <h3>Повернення і гарантія</h3>
+          <p>Повернення — 14 днів, для автозапчастин — 30 днів. Гарантія на більшість запчастин, крім електрики.</p>
+        </div>
+        <div class="facts__item">
+          <h3>Замовлення без реєстрації</h3>
+          <p>Оформити замовлення можна, не створюючи кабінет.</p>
+          <FutureLink note={NOTE} class="link-red facts__more">Детальніше про доставку і оплату <Icon name="arrow" size={20} /></FutureLink>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="stores" class="stores" rec="U-R006, SEO-R002" label="Магазини">
+    <div class="wrap">
+      <div class="stores__head">
+        <h2>5 магазинів і власний склад</h2>
+        <div class="tabs js-only" role="group" aria-label="Місто">
+          <button type="button" class="tabs__btn" data-city-btn="kyiv" aria-pressed="true">Київ · 3</button>
+          <button type="button" class="tabs__btn" data-city-btn="krop" aria-pressed="false">Кропивницький · 2</button>
+        </div>
+      </div>
+
+      <div class="city city--kyiv" data-city="kyiv">
+        <ul class="shops">
+          {stores.kyiv.map((s, i) => (
+            <li class="shop" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <p class="shop__name">{s.name}</p>
+              <p class="shop__street">{s.street}</p>
+              <p class="shop__hours">Графік роботи — за телефоном</p>
+              <div class="shop__act">
+                <a class="btn btn--red" href={mapLink(`Київ, ${s.street}`)} target="_blank" rel="noopener"><Icon name="route" size={20} />Прокласти маршрут</a>
+                <a class="btn btn--ghost" href={`tel:${phones.main.tel}`}>Уточнити наявність</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="photos">
+          <figure class="photo photo--a">
+            <Picture src={nyvky} formats={["avif", "webp"]} fallbackFormat="jpg" widths={[480, 800, 1100]} sizes="(max-width: 767px) 100vw, 40vw" alt="Магазин «Китаєць» на Нивках, вхід під червоною вивіскою" loading="lazy" width={1100} height={825} class="photo__img photo__img--nyvky" />
+            <figcaption>Нивки, вул. Нивська, 4г</figcaption>
+          </figure>
+          <figure class="photo photo--b">
+            <Picture src={voskresenka} formats={["avif", "webp"]} fallbackFormat="jpg" widths={[480, 800, 1100]} sizes="(max-width: 767px) 100vw, 40vw" alt="Прилавок магазину «Китаєць» на Воскресенці з підсвіченим логотипом" loading="lazy" width={1100} height={825} class="photo__img" />
+            <figcaption>Воскресенка, вул. Остафія Дашкевича, 15</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="city city--krop" data-city="krop">
+        <p class="since" data-reveal>Тут почалася мережа у 2008</p>
+        <ul class="shops shops--krop">
+          {stores.kropyvnytskyi.map((s, i) => (
+            <li class="shop" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <p class="shop__name">{s.name}</p>
+              <p class="shop__street">{s.street}</p>
+              <p class="shop__hours">Графік роботи — за телефоном</p>
+              <div class="shop__act">
+                <a class="btn btn--red" href={mapLink(`Кропивницький, ${s.street}`)} target="_blank" rel="noopener"><Icon name="route" size={20} />Прокласти маршрут</a>
+                <a class="btn btn--ghost" href={`tel:${phones.extra[2].tel}`}>Уточнити наявність</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="contacts" class="contacts" rec="U-R002, U-R010" label="Контакти">
+    <div class="wrap">
+      <h2 class="contacts__title">Зателефонуйте — підберемо деталь</h2>
+      <a class="contacts__num num" href={`tel:${phones.main.tel}`}>{phones.main.label}</a>
+      <p class="contacts__hint">Основна лінія. Call-центр працює щодня з 8:00 до 19:00.</p>
+      <div class="contacts__btns">
+        <a class="btn btn--light" href={channels.telegram} target="_blank" rel="noopener"><Icon name="telegram" size={20} />Telegram</a>
+        <a class="btn btn--outline" href={channels.viber}><Icon name="viber" size={20} />Viber</a>
+      </div>
+      <div class="contacts__grid">
+        <div>
+          <h3>Інші номери</h3>
+          <ul class="plain">
+            {phones.extra.map((p) => <li><a href={`tel:${p.tel}`} class="num">{p.label}</a>{p.note && <span class="muted"> · {p.note}</span>}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3>Скарги та пропозиції</h3>
+          <ul class="plain">
+            <li><a href={`tel:${phones.complaints.tel}`} class="num">{phones.complaints.label}</a><span class="muted"> · безкоштовна лінія</span></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ми в соцмережах</h3>
+          <ul class="plain plain--inline">
+            {socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.name}</a></li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <footer slot="footer" class="footer">
+    <div class="wrap">
+      <div class="footer__cols">
+        <div class="footer__brand">
+          <a class="logo logo--foot" href="#top" aria-label="Китаєць — на початок сторінки"><Logo /></a>
+          <p>Запчастини для китайських авто та електромобілів. З 2008 року, інтернет-магазин — з 2011.</p>
+        </div>
+        <nav aria-label="Каталог">
+          <h2 class="footer__h">Каталог</h2>
+          <ul>
+            <li><FutureLink note={NOTE}>Запчастини на китайські авто</FutureLink></li>
+            <li><FutureLink note={NOTE}>Запчастини для електромобілів</FutureLink></li>
+            <li><FutureLink note={NOTE}>Набори для ТО</FutureLink></li>
+            <li><FutureLink note={NOTE}>Автотовари</FutureLink></li>
+          </ul>
+        </nav>
+        <nav aria-label="Клієнтам">
+          <h2 class="footer__h">Клієнтам</h2>
+          <ul>
+            <li><FutureLink note={NOTE}>Доставка і оплата</FutureLink></li>
+            <li><FutureLink note={NOTE}>Гарантія і повернення</FutureLink></li>
+            <li><FutureLink note={NOTE}>Питання та відповіді</FutureLink></li>
+            <li><FutureLink note={NOTE}>Акції</FutureLink></li>
+            <li><FutureLink note={NOTE}>Бонусна програма</FutureLink></li>
+          </ul>
+        </nav>
+        <nav aria-label="Компанія">
+          <h2 class="footer__h">Компанія</h2>
+          <ul>
+            <li><FutureLink note={NOTE}>Про нас</FutureLink></li>
+            <li><a href="#stores">Магазини</a></li>
+            <li><FutureLink note={NOTE}>Вакансії</FutureLink></li>
+            <li><FutureLink note={NOTE}>Співпраця</FutureLink></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__base">
+        <p>© Китаєць · Kitaec.ua</p>
+        <ul>
+          <li><FutureLink note={NOTE}>Публічна оферта</FutureLink></li>
+          <li><FutureLink note={NOTE}>Політика конфіденційності</FutureLink></li>
+          <li><FutureLink note={NOTE}>Російська версія</FutureLink></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="dock" aria-label="Швидкий зв'язок" data-dock>
+    <a href={`tel:${phones.main.tel}`}><Icon name="phone" size={22} />Подзвонити</a>
+    <a href={channels.telegram} target="_blank" rel="noopener"><Icon name="telegram" size={22} />Telegram</a>
+    <a href={channels.viber}><Icon name="viber" size={22} />Viber</a>
+  </nav>
+
+  <script>
+    import "../scripts/app.ts";
+  </script>
+</Base>

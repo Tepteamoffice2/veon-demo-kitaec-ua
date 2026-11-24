@@ -1,0 +1,65 @@
+/* Hallmark · shape: red brand board → paper work blocks → graphite close · genre: editorial · theme: custom · job: buy · idea: "Правильний вибір починається з вашої марки: червоне табло марок веде до VIN і відправки сьогодні" · vibe: "фірмовий червоний, впевнено, швидко, по-майстерському"
+ * paper: #F3F4F6 · accent: #EE2737 · display: Geologica · body: Onest · hero: H1 і підбір марки на червоному полі, під ними виглядає табло марок · nav: light single row, open phone · footer: graphite columns · imagery: client photos · signature: табло марок, що перефарбовується в зелений для електромобілів
+ * axes: light/grotesk-heavy/chromatic-red · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: imagery, лише два реальні фото магазинів — решта подачі типографська за концепцією */
+/* Hallmark · waive 38ii · oblique display type, slnt -8 in tokens.css and site.css · the oblique letters continue the italic kitaec logo, so the display type keeps the brand signature */
+/* Hallmark · waive 77 · picker holds the brand board rows in two columns · the brand board is the signature of the page, rows of brands inside the continuous red field */
+/* Hallmark · dismissed F4 · red, light, segmented mode switch and tile rows are different roles · the red button acts on paper, the light button acts on the red field, the mode switch is a segmented control */
+/* Client design tokens from design/concept.md (veon-concept: colors, fonts). */
+@import "./fonts.css";
+
+:root {
+  /* colour roles */
+  font-synthesis: none;
+  --color-bg: #F3F4F6;
+  --color-text: #1A2530;
+  --color-accent: #EE2737;
+  --color-field: #D4182B;
+  --color-red-text: #C8102E;
+  --color-ev: #0E6B47;
+  --color-graphite: #1A2530;
+  --color-surface: #FCFCFD;
+  --color-well: #E7E9EC;
+  --color-muted: #4F5A66;
+  --color-edge: #77818B;
+  --color-on-field: #FFFBFA;
+  --color-on-graphite-muted: #B9C2CC;
+  --color-red-on-graphite: #FF5A66;
+  --color-line-on-field: rgba(255, 255, 255, .24);
+  --color-field-hover: #B71325;
+  --color-red-deep: #8F0C20;
+  --shade-10: rgba(26, 37, 48, .1);
+  --shade-12: rgba(26, 37, 48, .12);
+  --shade-20: rgba(26, 37, 48, .2);
+  --shade-24: rgba(26, 37, 48, .24);
+  --shade-35: rgba(26, 37, 48, .35);
+  --shade-50: rgba(26, 37, 48, .5);
+  --shade-track: rgba(0, 0, 0, .22);
+  --color-line-soft: rgba(255, 255, 255, .16);
+  --color-press-on-dark: rgba(255, 255, 255, .14);
+
+  /* type */
+  --font-display: "Geologica", system-ui, sans-serif;
+  --font-body: "Onest", system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.1rem + 5.4vw, 5.5rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  --fs-lead: clamp(1.375rem, 1.25rem + .5vw, 1.5625rem);
+  --fs-big: 1.25rem;
+  --fs-text: 1rem;
+  --fs-small: .875rem;
+
+  /* shape + motion */
+  --radius: 6px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --dur: 480ms;
+
+  /* layout (4/8 rhythm) */
+  --space: clamp(20px, 5vw, 64px);
+  --container: 1320px;
+  --gutter: 24px;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 40px; --s-7: 64px; --s-8: 96px; --s-9: 144px;
+  --block: clamp(64px, 40px + 6.7vw, 96px);
+  --header-h: 72px;
+}
+@media (max-width: 1023px) { :root { --header-h: 60px; } }

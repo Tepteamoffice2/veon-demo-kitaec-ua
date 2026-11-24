@@ -1,0 +1,32 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { nav, phones, channels, NOTE } from "../data/site";
+---
+<header class="hdr" data-header>
+  <div class="hdr__bar">
+    <details class="menu" data-menu>
+      <summary class="menu__btn" aria-label="Меню"><Icon name="burger" /></summary>
+      <div class="menu__panel">
+        <ul>
+          <li><FutureLink note={NOTE} class="menu__item">Каталог</FutureLink></li>
+          {nav.map((n) => <li><a class="menu__item" href={n.href}>{n.label}</a></li>)}
+          <li><FutureLink note={NOTE} class="menu__item">Акції</FutureLink></li>
+          <li><FutureLink note={NOTE} class="menu__item">Російська версія</FutureLink></li>
+        </ul>
+      </div>
+    </details>
+    <a class="logo" href="#top" aria-label="Китаєць — на початок сторінки"><Logo /></a>
+    <nav class="hdr__nav" aria-label="Основна навігація">
+      <ul>
+        <li><FutureLink note={NOTE}>Каталог</FutureLink></li>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <FutureLink note="Пошук по каталогу з'явиться у повній версії сайту" class="hdr__search"><Icon name="search" size={20} /><span class="hdr__search-text">Пошук запчастин</span></FutureLink>
+    <a class="hdr__phone" href={`tel:${phones.main.tel}`}><Icon name="phone" size={20} /><span class="hdr__phone-num">{phones.main.label}</span><span class="visually-hidden">Подзвонити</span></a>
+    <a class="hdr__tg" href={channels.telegram} target="_blank" rel="noopener" aria-label="Telegram"><Icon name="telegram" size={22} /></a>
+    <div class="hdr__lang" aria-label="Мова"><span aria-current="true">UA</span><FutureLink note={NOTE} class="fl-edge">RU</FutureLink></div>
+  </div>
+</header>

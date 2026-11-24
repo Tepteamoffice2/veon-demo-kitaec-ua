@@ -1,0 +1,10 @@
+---
+// Original client logo: inline SVG paths copied from the client's header (symbol + wordmark), colour via currentColor.
+import paths from "../brand-paths.json";
+interface Props { class?: string; }
+const { class: cls } = Astro.props;
+---
+<svg class:list={["logo-svg", cls]} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 46" fill="currentColor" role="img" aria-label="Китаєць" width="180" height="46">
+  <svg x="0" width="62" height="46" viewBox="0 0 62 46"><path d={paths[0]} /></svg>
+  <svg x="70" width="110" height="46" viewBox="0 0 110 46"><path d={paths[1]} /></svg>
+</svg>
